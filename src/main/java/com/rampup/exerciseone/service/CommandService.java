@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CommandService {
 
-   List< CommandDto> getClientCommands(String clientId );
+   List< CommandDto> getClientCommands(Long clientId );
 
-   CommandDto getCommandById(String clientId, String commandId);
+   CommandDto getCommandById(Long clientId, Long commandId);
 }

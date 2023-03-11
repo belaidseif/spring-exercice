@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,13 +22,16 @@ public class CommandController {
     private CommandService commandService;
 
     @GetMapping("{clientId}/commands")
-    List<CommandDto> getClientCommands(@PathVariable("clientId") String clientId){
+   public ResponseEntity<List<CommandDto>> getClientCommands(@PathVariable("clientId") @Valid Long clientId){
 
-        return commandService.getClientCommands(clientId);
+        return ResponseEntity.ok( commandService.getClientCommands(clientId));
     }
 
     @GetMapping("{clientId}/commands/{commandId}")
-   public ResponseEntity<CommandDto> getCommandById(@PathVariable("clientId") String clientId, @PathVariable("commandId") String commandId){
+   public ResponseEntity<CommandDto> getCommandById(
+           @PathVariable("clientId") @Valid Long clientId,
+           @PathVariable("commandId") @Valid Long commandId
+    ){
         CommandDto commandDto = commandService.getCommandById(clientId, commandId);
         return ResponseEntity.ok(commandDto);
 

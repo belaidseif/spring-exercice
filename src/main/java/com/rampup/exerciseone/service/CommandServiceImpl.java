@@ -17,11 +17,9 @@ public class CommandServiceImpl implements CommandService{
     @Autowired private CommandRepository commandRepository;
 
     @Override
-    public List<CommandDto> getClientCommands(String clientId) {
-        if(!isLong(clientId) ){
-            throw new CommandException.IdCannotBeParsed("client id is not a number");
-        }
-        List<Command> commands = commandRepository.getCommandByClientId(Long.parseLong(clientId));
+    public List<CommandDto> getClientCommands(Long clientId) {
+
+        List<Command> commands = commandRepository.getCommandByClientId(clientId);
 
         List<CommandDto> commandDtos = commands.stream().map(e -> CommandDto.createFromEntity(e)).collect(Collectors.toList());
 
@@ -29,20 +27,11 @@ public class CommandServiceImpl implements CommandService{
     }
 
     @Override
-    public CommandDto getCommandById(String clientId, String commandId) {
-        if(!isLong(clientId) || !isLong(commandId)){
-            throw new CommandException.IdCannotBeParsed("one of the params is not a number");
-        }
-        Optional<Command> commandOpt = commandRepository.getCommandByIdAndClientId( Long.parseLong(commandId),Long.parseLong(clientId));
+    public CommandDto getCommandById(Long clientId, Long commandId) {
+
+        Optional<Command> commandOpt = commandRepository.getCommandByIdAndClientId( commandId,clientId);
         Command command = commandOpt.orElseThrow(() -> new CommandException.CommandNotFound("command not found"));
         return CommandDto.createFromEntity(command);
     }
 
-    private boolean isLong(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-
-        return strNum.chars().allMatch( Character::isDigit );
-    }
 }
