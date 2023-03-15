@@ -1,9 +1,11 @@
 package com.rampup.exerciseone.dto;
 
 
-import com.rampup.exerciseone.model.Product;
 
-public class ProductDto {
+import com.rampup.exerciseone.model.Product;
+import org.springframework.hateoas.RepresentationModel;
+
+public class ProductDto extends RepresentationModel<ProductDto> {
     public ProductDto(Long id, String name, Double price) {
         this.id = id;
         this.name = name;
@@ -17,6 +19,7 @@ public class ProductDto {
     private Double price;
 
     public static ProductDto createFromEntity(Product product){
+
         return new ProductDto(product.getId(), product.getName(),product.getPrice());
     }
 

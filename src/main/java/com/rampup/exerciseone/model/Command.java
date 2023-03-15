@@ -3,6 +3,7 @@ package com.rampup.exerciseone.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "COMMAND")
-public class Command {
+public class Command  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

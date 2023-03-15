@@ -3,6 +3,7 @@ package com.rampup.exerciseone.dto;
 
 
 import com.rampup.exerciseone.model.Command;
+import org.springframework.hateoas.RepresentationModel;
 
 
 import java.time.ZonedDateTime;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class CommandDto{
+public class CommandDto extends RepresentationModel<CommandDto> {
     public CommandDto(Long id, ZonedDateTime createdAt, List<DetailDto> details) {
         this.id = id;
         this.createdAt = createdAt;
@@ -27,7 +28,10 @@ public class CommandDto{
 
     public static CommandDto createFromEntity(Command command){
 
-        List<DetailDto> details = command.getDetails().stream().map(e -> DetailDto.createFromEntity(e)).collect(Collectors.toList());
+        List<DetailDto> details = command
+                .getDetails()
+                .stream()
+                .map(e -> DetailDto.createFromEntity(e)).collect(Collectors.toList());
         return new CommandDto(
             command.getId(),
             command.getCreatedAt(), details

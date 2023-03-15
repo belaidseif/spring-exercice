@@ -1,6 +1,7 @@
 package com.rampup.exerciseone.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "CLIENT")
-public class Client {
+public class Client{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

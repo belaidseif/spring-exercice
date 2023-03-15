@@ -6,13 +6,15 @@ import com.rampup.exerciseone.dto.ProductDto;
 import com.rampup.exerciseone.service.CommandService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
+
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,6 +26,8 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.Matchers.*;
@@ -33,6 +37,7 @@ import org.junit.runner.RunWith;
 
 @WebMvcTest(CommandController.class)
 @RunWith(SpringRunner.class)
+@DataJpaTest
 class CommandControllerTest {
 
     @MockBean private CommandService commandService;
@@ -81,7 +86,59 @@ class CommandControllerTest {
 
     }
 
+
     @Test
-    void getCommandById() {
+    @DisplayName("GET /rampup/api/a/commands BAD REQUEST")
+    void getClientCommandsBadRequest()throws Exception{
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/rampup/api/a/commands");
+
+        mvc.perform(request).andExpect(status().isBadRequest());
+
+        verify(commandService,never()).getClientCommands(ArgumentMatchers.any());
     }
+
+
+    @Test
+    @DisplayName("GET /rampup/api/2/commands/3 should return command with id equals 2")
+    void getCommandById() throws Exception{
+        given(commandService.getCommandById(2L,3L)).willReturn(COMMAND2);
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/rampup/api/2/commands/3");
+
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(3)))
+                .andExpect(jsonPath("$.details.length()", is(1)))
+                .andExpect(jsonPath("$.details[0].quantity", is(12)))
+                .andExpect(jsonPath("$.details[0].product.price", is(129.0)));
+
+
+    }
+
+    @Test
+    @DisplayName("GET /rampup/api/2/commands/aaa should return bad request")
+    void getCommandByIdFailed() throws Exception{
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/rampup/api/2/commands/aaa");
+
+        mvc.perform(request)
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    @DisplayName("GET /rampup/api/ccc/commands/2 should return bad request")
+    void getCommandByIdClientIdNotValid() throws Exception{
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/rampup/api/ccc/commands/2");
+
+        mvc.perform(request)
+                .andExpect(status().isBadRequest());
+
+    }
+
+
 }

@@ -1,10 +1,13 @@
 package com.rampup.exerciseone.model;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "PRODUCT")
-public class Product {
+public class Product{
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +18,15 @@ public class Product {
 
     @Column(name = "PRICE")
     private Double price;
+
+    public Product() {
+    }
+
+    public Product(Long id, String name, Double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
 
     public Long getId() {
         return id;
