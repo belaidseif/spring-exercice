@@ -22,7 +22,7 @@ public class Client{
     private String lastName;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Command> commands = new ArrayList<>();
 
     public Long getId() {

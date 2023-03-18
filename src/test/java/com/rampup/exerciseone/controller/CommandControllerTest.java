@@ -9,13 +9,11 @@ import org.junit.jupiter.api.Test;
 
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
+
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -24,7 +22,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -37,7 +35,6 @@ import org.junit.runner.RunWith;
 
 @WebMvcTest(CommandController.class)
 @RunWith(SpringRunner.class)
-@DataJpaTest
 class CommandControllerTest {
 
     @MockBean private CommandService commandService;
@@ -73,15 +70,15 @@ class CommandControllerTest {
 
         mvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()", is(2)))
-                .andExpect(jsonPath("$[0].id", is(2)))
-                .andExpect(jsonPath("$[0].createdAt", is("2018-10-10T00:00:00+01:00")))
-                .andExpect(jsonPath("$[0].details.length()", is(2)))
-                .andExpect(jsonPath("$[0].details[0].quantity", is(12)))
-                .andExpect(jsonPath("$[0].details[0].product.name", is("PC")))
-                .andExpect(jsonPath("$[0].details[1]product.price", is(300.0)))
-                .andExpect(jsonPath("$[1].id", is(3)))
-                .andExpect(jsonPath("$[1].details.length()", is(1)));
+                .andExpect(jsonPath("$._embedded.commandDtoList.length()", is(2)))
+                .andExpect(jsonPath("$._embedded.commandDtoList[0].id", is(2)))
+                .andExpect(jsonPath("$._embedded.commandDtoList[0].createdAt", is("2018-10-10T00:00:00+01:00")))
+                .andExpect(jsonPath("$._embedded.commandDtoList[0].details.length()", is(2)))
+                .andExpect(jsonPath("$._embedded.commandDtoList[0].details[0].quantity", is(12)))
+                .andExpect(jsonPath("$._embedded.commandDtoList[0].details[0].product.name", is("PC")))
+                .andExpect(jsonPath("$._embedded.commandDtoList[0].details[1]product.price", is(300.0)))
+                .andExpect(jsonPath("$._embedded.commandDtoList[1].id", is(3)))
+                .andExpect(jsonPath("$._embedded.commandDtoList[1].details.length()", is(1)));
 
 
     }

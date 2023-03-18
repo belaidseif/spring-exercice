@@ -26,7 +26,7 @@ public class Command  {
     private Client client;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "command", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "command", cascade = CascadeType.ALL)
     private List<Detail> details = new ArrayList<>();
 
     public Long getId() {

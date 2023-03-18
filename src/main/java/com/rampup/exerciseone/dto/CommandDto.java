@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
 public class CommandDto extends RepresentationModel<CommandDto> {
     public CommandDto(Long id, ZonedDateTime createdAt, List<DetailDto> details) {
         this.id = id;
@@ -26,7 +27,7 @@ public class CommandDto extends RepresentationModel<CommandDto> {
 
     private List<DetailDto> details = new ArrayList<>();
 
-    public static CommandDto createFromEntity(Command command){
+    public static CommandDto createFromEntity(Command command){// better using builder here
 
         List<DetailDto> details = command
                 .getDetails()

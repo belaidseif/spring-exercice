@@ -1,7 +1,7 @@
 package com.rampup.exerciseone.service;
 
 import com.rampup.exerciseone.dto.ProductDto;
-import com.rampup.exerciseone.exception.CommandException;
+
 import com.rampup.exerciseone.exception.ProductException;
 import com.rampup.exerciseone.model.Product;
 import com.rampup.exerciseone.repository.ProductRepository;
@@ -12,12 +12,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
+
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest

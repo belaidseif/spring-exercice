@@ -27,9 +27,11 @@ public class CommandController {
     @Autowired
     private CommandService commandService;
 
+
     @Operation(description = "get all commands of specific client")
     @GetMapping("{clientId}/commands")
-   public ResponseEntity<CollectionModel<CommandDto>> getClientCommands(@PathVariable("clientId") @Valid Long clientId){
+   public ResponseEntity<CollectionModel<CommandDto>> getClientCommands(
+           @PathVariable("clientId") @Valid Long clientId){
         List<CommandDto> clientCommands = commandService.getClientCommands(clientId);
 
         for (CommandDto commandDto:clientCommands){
@@ -42,7 +44,6 @@ public class CommandController {
         CollectionModel<CommandDto> result = CollectionModel.of(clientCommands, link);
         return ResponseEntity.ok(result);
     }
-
 
     @GetMapping("{clientId}/commands/{commandId}")
    public ResponseEntity<CommandDto> getCommandById(
