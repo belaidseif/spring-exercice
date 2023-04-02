@@ -4,7 +4,6 @@ package com.rampup.exerciseone.controller;
 import com.rampup.exerciseone.dto.ProductDto;
 import com.rampup.exerciseone.service.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +21,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Tag(name = "product api")
 public class ProductController {
 
-    @Autowired private ProductService productService;
+     private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
 
     @GetMapping("{productId}")

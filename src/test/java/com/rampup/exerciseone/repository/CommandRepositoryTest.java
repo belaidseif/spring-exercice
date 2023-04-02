@@ -32,10 +32,10 @@ class CommandRepositoryTest {
         List<Command> all = repository.getCommandByClientId(2L);
         Assertions.assertEquals(all.size(),3);
         Command command1 = all.get(1);
-        Assertions.assertEquals(command1.getId(),2);
-        Assertions.assertEquals(command1.getClient().getFirstName(),"seif");
-        Assertions.assertEquals(command1.getDetails().size(),1);
-        Assertions.assertEquals(command1.getDetails().get(0).getProduct().getName(),"Pc");
+        Assertions.assertEquals(2,command1.getId());
+        Assertions.assertEquals("seif",command1.getClient().getFirstName());
+        Assertions.assertEquals(1,command1.getDetails().size());
+        Assertions.assertEquals("Pc",command1.getDetails().get(0).getProduct().getName());
     }
 
     @Test
@@ -43,7 +43,7 @@ class CommandRepositoryTest {
     @DisplayName("should return empty for client who has no commands")
     void getCommandByClientIdEmpty(){
         List<Command> all = repository.getCommandByClientId(4L);
-        Assertions.assertEquals(all.size(),0);
+        Assertions.assertEquals(0,all.size());
     }
 
 
@@ -54,10 +54,10 @@ class CommandRepositoryTest {
         Optional<Command> commandOpt = repository.getCommandByIdAndClientId(2L,2L);
 
         Assertions.assertTrue(commandOpt.isPresent());
-        Assertions.assertEquals(commandOpt.get().getDetails().size(),1);
-        Assertions.assertEquals(commandOpt.get().getClient().getId(),2);
-        Assertions.assertEquals(commandOpt.get().getId(),2);
-        Assertions.assertEquals(commandOpt.get().getCreatedAt().getDayOfMonth(), 28);
+        Assertions.assertEquals(1,commandOpt.get().getDetails().size());
+        Assertions.assertEquals(2,commandOpt.get().getClient().getId());
+        Assertions.assertEquals(2,commandOpt.get().getId());
+        Assertions.assertEquals(28,commandOpt.get().getCreatedAt().getDayOfMonth());
     }
 
     @Test

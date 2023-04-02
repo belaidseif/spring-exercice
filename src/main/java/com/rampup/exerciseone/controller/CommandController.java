@@ -4,8 +4,6 @@ import com.rampup.exerciseone.dto.CommandDto;
 import com.rampup.exerciseone.service.CommandService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +22,17 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Tag(name = "command api")
 public class CommandController {
 
-    @Autowired
-    private CommandService commandService;
+
+    private final CommandService commandService;
+
+    public CommandController(CommandService commandService) {
+        this.commandService = commandService;
+    }
 
 
     @Operation(description = "get all commands of specific client")
     @GetMapping("{clientId}/commands")
-   public ResponseEntity<CollectionModel<CommandDto>> getClientCommands(
+   public ResponseEntity<List<CommandDto>> getClientCommands(
            @PathVariable("clientId") @Valid Long clientId){
         List<CommandDto> clientCommands = commandService.getClientCommands(clientId);
 
@@ -40,9 +42,9 @@ public class CommandController {
             commandDto.add(selfLink);
 
         }
-        Link link = linkTo(methodOn(CommandController.class).getClientCommands(clientId)).withSelfRel();
-        CollectionModel<CommandDto> result = CollectionModel.of(clientCommands, link);
-        return ResponseEntity.ok(result);
+
+
+        return ResponseEntity.ok(clientCommands);
     }
 
     @GetMapping("{clientId}/commands/{commandId}")

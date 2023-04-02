@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 
 public class CommandDto extends RepresentationModel<CommandDto> {
+    public CommandDto(){}
     public CommandDto(Long id, ZonedDateTime createdAt, List<DetailDto> details) {
         this.id = id;
         this.createdAt = createdAt;

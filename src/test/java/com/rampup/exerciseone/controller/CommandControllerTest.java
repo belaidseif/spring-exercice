@@ -70,15 +70,15 @@ class CommandControllerTest {
 
         mvc.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.commandDtoList.length()", is(2)))
-                .andExpect(jsonPath("$._embedded.commandDtoList[0].id", is(2)))
-                .andExpect(jsonPath("$._embedded.commandDtoList[0].createdAt", is("2018-10-10T00:00:00+01:00")))
-                .andExpect(jsonPath("$._embedded.commandDtoList[0].details.length()", is(2)))
-                .andExpect(jsonPath("$._embedded.commandDtoList[0].details[0].quantity", is(12)))
-                .andExpect(jsonPath("$._embedded.commandDtoList[0].details[0].product.name", is("PC")))
-                .andExpect(jsonPath("$._embedded.commandDtoList[0].details[1]product.price", is(300.0)))
-                .andExpect(jsonPath("$._embedded.commandDtoList[1].id", is(3)))
-                .andExpect(jsonPath("$._embedded.commandDtoList[1].details.length()", is(1)));
+                .andExpect(jsonPath("$.length()", is(2)))
+                .andExpect(jsonPath("$[0].id", is(2)))
+                .andExpect(jsonPath("$[0].createdAt", is("2018-10-10T00:00:00+01:00")))
+                .andExpect(jsonPath("$[0].details.length()", is(2)))
+                .andExpect(jsonPath("$[0].details[0].quantity", is(12)))
+                .andExpect(jsonPath("$[0].details[0].product.name", is("PC")))
+                .andExpect(jsonPath("$[0].details[1]product.price", is(300.0)))
+                .andExpect(jsonPath("$[1].id", is(3)))
+                .andExpect(jsonPath("$[1].details.length()", is(1)));
 
 
     }

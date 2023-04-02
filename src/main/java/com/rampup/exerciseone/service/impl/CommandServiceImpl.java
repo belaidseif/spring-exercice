@@ -1,10 +1,10 @@
-package com.rampup.exerciseone.service;
+package com.rampup.exerciseone.service.impl;
 
 import com.rampup.exerciseone.dto.CommandDto;
 import com.rampup.exerciseone.exception.CommandException;
 import com.rampup.exerciseone.model.Command;
 import com.rampup.exerciseone.repository.CommandRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.rampup.exerciseone.service.CommandService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +12,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class CommandServiceImpl implements CommandService{
+public class CommandServiceImpl implements CommandService {
 
-    @Autowired private CommandRepository commandRepository;
+    private final CommandRepository commandRepository;
+
+    public CommandServiceImpl(CommandRepository commandRepository) {
+        this.commandRepository = commandRepository;
+    }
 
     @Override
     public List<CommandDto> getClientCommands(Long clientId) {

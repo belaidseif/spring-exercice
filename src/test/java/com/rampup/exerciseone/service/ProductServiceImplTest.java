@@ -39,9 +39,9 @@ class ProductServiceImplTest {
 
         ProductDto returnedProduct = service.getProductById(2L);
 
-        Assertions.assertEquals(returnedProduct.getId(),2L);
-        Assertions.assertEquals(returnedProduct.getName(),"Phone");
-        Assertions.assertEquals(returnedProduct.getPrice(),999.0);
+        Assertions.assertEquals(2L,returnedProduct.getId());
+        Assertions.assertEquals("Phone",returnedProduct.getName());
+        Assertions.assertEquals(999.0,returnedProduct.getPrice());
 
     }
 
